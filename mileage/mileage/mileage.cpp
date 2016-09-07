@@ -5,6 +5,7 @@ class Mpg_log
 private:
 	double last_odometer;
 	double current_odometer;
+	double current_miles_traveled;
 	double current_gas;
 
 public:
@@ -17,14 +18,14 @@ public:
 	{
 		last_odometer = current_odometer;
 		current_odometer = odometer;
+		current_miles_traveled = current_odometer - last_odometer;
 		current_gas = gas;
 	}
 
 	double get_current_mpg()
 	{
-		double miles_traveled = current_odometer - last_odometer;
-		double mpg = miles_traveled / current_gas;
-		return mpg;
+		double current_mpg = current_miles_traveled / current_gas;
+		return current_mpg;
 	}
 };
 
@@ -38,7 +39,7 @@ int main()
 	double odometer;
 	double gas;
 
-	while(true)
+	while (true)
 	{
 		cout << "\nCurrent odometer reading: ";
 		cin >> odometer;
@@ -47,6 +48,6 @@ int main()
 
 		logger.buy_gas(odometer, gas);
 		cout << "This mpg: " << logger.get_current_mpg() << endl;
-	} 
+	}
 	return 0;
 }
