@@ -89,14 +89,19 @@ int main()
 	while (true)
 	{
 		cout << "\nCurrent odometer reading: ";
-		cin >> odometer;
-		cout << "Gallons of gas purchased: ";
-		cin >> gas;
-
-		logger.buy_gas(odometer, gas);
-		cout << "This mpg: " << logger.get_current_mpg() << endl;
-		cout << "Total mpg: " << logger.get_total_mpg() << endl;
-		cout << "Rolling average mpg: " << logger.get_rolling_average_mpg() << endl;
+		if (cin >> odometer)
+		{
+			cout << "Gallons of gas purchased: ";
+			if (cin >> gas)
+			{
+				logger.buy_gas(odometer, gas);
+				cout << "This mpg: " << logger.get_current_mpg() << endl;
+				cout << "Total mpg: " << logger.get_total_mpg() << endl;
+				cout << "Rolling average mpg: " << logger.get_rolling_average_mpg() << endl;
+			}
+			else break;
+		}
+		else break;
 	}
 	return 0;
 }
