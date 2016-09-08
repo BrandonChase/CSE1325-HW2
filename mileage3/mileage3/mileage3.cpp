@@ -148,18 +148,37 @@ public:
 
 		file_output.close();
 	}
+
+	void display_information_to_console()
+	{
+		cout << file_content[0] << ",This MPG,Total MPG,Rolling Average MPG" << endl;
+		cout << file_content[1] << endl;
+		for (int i = 0; i < file_gas.size(); ++i)
+		{
+			cout << file_content[i + 2] << ',' << file_this_mpg[i] << ',' << file_total_mpg[i] << ',' << file_roll_avg_mpg[i] << endl;
+		}
+	}
 };
 
 int main()
 {
+	cout << "~~~Didn't know if by standard output you meant to the console or to a file so i did both.~~~\n\n";
+
 	Mpg_log logger;
+
+	string file_input_name;
+	cout << "Please enter the name of the input file [exclude .csv]: ";
+	getline(cin, file_input_name);
+	file_input_name += ".csv";
+
 	string file_output_name;
 	cout << "Please enter your desired name for the ouput file [exclude .csv]: ";
 	getline(cin, file_output_name);
 	file_output_name += ".csv";
 
-	cout << "Reading file ..." << endl;
-	logger.read_file("Mileage_Log_for_Extreme_Bonus.csv");
+
+	cout << "\nReading file " << file_input_name << "..." << endl;
+	logger.read_file(file_input_name);
 	logger.set_initial_values();
 
 	cout << "Performing calculations ..." << endl;
@@ -168,7 +187,11 @@ int main()
 	cout << "Writing to " << file_output_name << " ..." << endl;
 	logger.write_file(file_output_name);
 
-	cout << "Program complete ..." << endl << endl;
+	cout << "Output Data:" << endl << endl;
+
+	logger.display_information_to_console();
+
+	cout << "Program complete ..." << endl;
 
 	keep_window_open();
 	return 0;
