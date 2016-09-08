@@ -1,4 +1,5 @@
 #include "std_lib_facilities.h"
+#include <deque>
 
 class Mpg_log
 {
@@ -9,8 +10,8 @@ private:
 	double current_gas;
 	double total_miles_traveled;
 	double total_gas;
-	vector<double> recent_miles_traveled;
-	vector<double> recent_gas;
+	deque<double> recent_miles_traveled;
+	deque<double> recent_gas;
 
 public:
 	Mpg_log(double initial_odometer)
@@ -33,6 +34,12 @@ public:
 
 		recent_miles_traveled.push_back(current_miles_traveled);
 		recent_gas.push_back(current_gas);
+
+		if (recent_gas.size() == 6)
+		{
+			recent_gas.pop_front();
+			recent_miles_traveled.pop_front();
+		}
 	}
 
 	double get_current_mpg()
@@ -49,10 +56,15 @@ public:
 
 	double get_rolling_average_mpg()
 	{
-		if (recent_gas.size() > 5)
+		if (recent_gas.size() < 5)
+		{
+			return get_total_mpg();
+		}
+
+		else
 		{
 			double miles_traveled_sum = 0, gas_sum = 0;
-			for (int i = recent_gas.size() - 5; i < recent_gas.size(); ++i)
+			for (int i = 0; i < recent_gas.size(); ++i)
 			{
 				miles_traveled_sum += recent_miles_traveled[i];
 				gas_sum += recent_gas[i];
@@ -60,11 +72,6 @@ public:
 
 			double rolling_average_mpg = miles_traveled_sum / gas_sum;
 			return rolling_average_mpg;
-		}
-
-		else
-		{
-			return get_total_mpg();
 		}
 	}
 };
