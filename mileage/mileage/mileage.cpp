@@ -31,6 +31,7 @@ public:
 
 int main()
 {
+	cout << "Enter any character as input to quit program." << endl;
 	cout << "Initial odometer reading: ";
 	double initial_odometer;
 	cin >> initial_odometer;
